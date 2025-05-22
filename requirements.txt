@@ -150,8 +150,6 @@ python-pptx==1.0.2
 python-telegram-bot==21.6
 pytweening==1.2.0
 pytz==2024.2
-pywhatkit==5.4
-pywin32==308
 pywin32-ctypes==0.2.3
 PyYAML==6.0.2
 pyzbar==0.1.9
