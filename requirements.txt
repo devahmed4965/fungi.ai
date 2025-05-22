@@ -184,7 +184,6 @@ tensorboard==2.19.0
 tensorboard-data-server==0.7.2
 tensorboard-plugin-wit==1.8.1
 tensorflow-cpu==2.16.1
-tensorflow-directml-plugin==0.4.0.dev230202
 tensorflow-estimator==2.10.0
 tensorflow-io-gcs-filesystem==0.31.0
 termcolor==3.0.1
