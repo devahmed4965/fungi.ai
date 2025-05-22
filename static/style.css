@@ -1,0 +1,546 @@
+/* --- بداية style.css --- */
+:root {
+    --primary-color: #4CAF50; /* أخضر */
+    --primary-light: #e8f5e9;
+    --secondary-color: #8D6E63; /* بني */
+    --background-color: #f8f9fa; /* رمادي فاتح */
+    --card-background: #ffffff;
+    --text-color: #343a40; /* رمادي داكن */
+    --text-light: #6c757d; /* رمادي متوسط */
+    --border-color: #dee2e6;
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --font-family: 'Cairo', sans-serif;
+    --border-radius-md: 12px;
+    --border-radius-sm: 8px;
+}
+
+/* --- أنماط الجسم الأساسية --- */
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column; /* للسماح للفوتر بالبقاء في الأسفل */
+    align-items: center; /* توسيط المحتوى أفقيًا */
+    min-height: 100vh;
+    padding: 20px; /* تقليل الحشو قليلًا */
+    box-sizing: border-box;
+    line-height: 1.7;
+    margin: 0; /* إزالة الهامش الافتراضي */
+}
+
+.container {
+    max-width: 800px; /* زيادة العرض قليلًا للشاشات الأكبر */
+    width: 100%;
+    animation: fadeIn 0.7s ease-out;
+    flex-grow: 1; /* لجعل المحتوى يملأ المساحة المتاحة */
+    padding-bottom: 60px; /* ترك مساحة للفوتر */
+}
+
+/* --- تعديلات على العناوين والكروت --- */
+h1 {
+    color: var(--secondary-color);
+    text-align: center;
+    margin-bottom: 30px; /* تقليل الهامش */
+    font-weight: 700;
+    font-size: 1.8em;
+}
+
+h1 .icon {
+    display: inline-block;
+    margin-inline-end: 12px; /* استخدام هامش منطقي لـ RTL/LTR */
+    font-size: 1.6em;
+    vertical-align: -4px;
+    filter: grayscale(20%) opacity(0.9);
+    transform: rotate(-10deg);
+}
+
+.card {
+    background: var(--card-background);
+    padding: 25px 30px; /* تعديل الحشو */
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 5px 15px var(--shadow-color);
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* --- تنسيق منطقة الرفع --- */
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    display: flex; /* استخدام flex لتوسيط المحتوى */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px; /* ارتفاع أدنى */
+    width: 100%;
+    padding: 20px 15px;
+    border: 2px dashed var(--border-color);
+    border-radius: var(--border-radius-sm);
+    box-sizing: border-box;
+    background-color: #fdfdfd;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    margin-bottom: 20px;
+    color: var(--text-light);
+    font-size: 1em;
+}
+
+.custom-file-upload:hover {
+    border-color: var(--primary-color);
+    background-color: var(--primary-light); /* تغيير لون الخلفية عند التحويم */
+}
+
+.custom-file-upload .file-upload-icon {
+    font-size: 2.5em; /* تكبير الأيقونة */
+    display: block;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    opacity: 0.8;
+}
+
+/* --- زر الإرسال --- */
+.submit-button {
+    background: linear-gradient(45deg, var(--primary-color), #66BB6A);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 700;
+    font-family: var(--font-family);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+.submit-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(76, 175, 80, 0.4);
+    filter: brightness(1.05);
+}
+
+.submit-button:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
+}
+
+/* --- صندوق النتائج --- */
+.result-box h3 {
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 700;
+    font-size: 1.3em;
+}
+
+img.preview {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px; /* يمكن تعديل الارتفاع الأقصى */
+    margin: 15px auto 25px auto; /* تعديل الهوامش */
+    display: block;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    animation: zoomIn 0.6s ease-out;
+}
+
+/* --- عناصر التنبؤ --- */
+.prediction-item {
+    margin: 10px 0;
+    padding: 12px 15px; /* تعديل الحشو */
+    background: #fff;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid #f1f1f1;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    opacity: 0;
+    animation: slideInUp 0.5s ease-out forwards;
+    animation-delay: calc(var(--i, 0) * 0.08s); /* تسريع الأنيميشن قليلًا */
+}
+
+.prediction-item:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.06);
+}
+
+.prediction-item.top {
+    background: linear-gradient(to right, var(--primary-light), var(--card-background));
+    border-inline-start: 6px solid var(--primary-color); /* استخدام حدود منطقية */
+    font-weight: 700;
+}
+
+/* --- شريط الثقة --- */
+.confidence-bar {
+    height: 8px; /* تصغير الشريط قليلًا */
+    background: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 6px;
+}
+
+.confidence-fill {
+    height: 100%;
+    background: var(--primary-color);
+    width: 0;
+    transition: width 1s cubic-bezier(0.25, 1, 0.5, 1);
+    border-radius: 10px;
+}
+
+/* --- تفاصيل التصنيف --- */
+.taxonomy-details {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px dashed var(--border-color);
+    animation: fadeIn 0.7s ease-out 0.5s backwards; /* تعديل التأخير */
+}
+
+.taxonomy-details h3, .taxonomy-details h4 {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 15px;
+    font-weight: 700;
+    font-size: 1.2em; /* توحيد حجم عناوين H3 و H4 هنا */
+    color: var(--secondary-color);
+}
+
+.taxonomy-details ul {
+    list-style: none;
+    padding: 0; /* إزالة الحشو الافتراضي */
+}
+
+.taxonomy-details li {
+    margin-bottom: 10px;
+    font-size: 0.95em;
+    color: var(--text-light);
+    display: flex;
+    flex-wrap: wrap; /* السماح بالالتفاف على الشاشات الصغيرة */
+    justify-content: space-between;
+    align-items: baseline; /* محاذاة النص على خط الأساس */
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.taxonomy-details li:last-child {
+    border-bottom: none;
+}
+
+.taxonomy-details li strong {
+    color: var(--text-color);
+    font-weight: bold;
+    margin-inline-end: 10px; /* هامش منطقي */
+    min-width: 90px; /* عرض أدنى للعنوان */
+    flex-shrink: 0; /* منع التقلص */
+}
+
+.taxonomy-details li span {
+    text-align: start; /* محاذاة النص إلى البداية (يدعم RTL/LTR) */
+    flex-grow: 1;
+    color: #495057;
+}
+
+/* --- رسائل Flash --- */
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+.flash {
+    padding: 12px 18px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-sm);
+    text-align: center;
+    font-weight: bold;
+    animation: fadeIn 0.5s ease-out;
+    font-size: 0.95em;
+}
+/* (بقية تنسيقات flash تبقى كما هي) */
+.flash.error { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
+.flash.success { color: #155724; background-color: #d4edda; border-color: #c3e6cb; }
+.flash.warning { color: #856404; background-color: #fff3cd; border-color: #ffeeba; }
+
+
+/* --- زر تبديل اللغة --- */
+.lang-switch {
+    position: fixed;
+    top: 15px;
+    /* تحديد الموضع بناءً على اتجاه الصفحة */
+    inset-inline-end: 15px; /* يضع الزر على اليمين في LTR وعلى اليسار في RTL */
+    cursor: pointer;
+    padding: 8px 15px;
+    background-color: var(--card-background);
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    z-index: 1000;
+    font-size: 0.9em;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lang-switch:hover {
+    background-color: var(--primary-light);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* --- الفوتر --- */
+.page-footer { /* تغيير من footer إلى class */
+    text-align: center;
+    margin-top: 30px; /* تقليل الهامش العلوي */
+    padding: 15px 0;
+    font-size: 0.9em;
+    color: var(--text-light);
+    width: 100%;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--background-color); /* لضمان عدم التداخل مع المحتوى */
+}
+
+/* --- مؤشر التحميل --- */
+.loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9); /* زيادة الشفافية قليلًا */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(3px); /* إضافة تأثير ضبابي للخلفية */
+}
+
+.loader {
+    border: 5px solid #f3f3f3; /* تقليل سمك الحدود */
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    width: 45px; /* تصغير حجم اللودر */
+    height: 45px;
+    animation: spin 0.8s linear infinite; /* تسريع الدوران */
+    margin-bottom: 15px;
+}
+/* (أنميشن spin يبقى كما هو) */
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+.loader-wrapper p {
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* --- تنسيق الجداول --- */
+.table-container {
+    overflow-x: auto; /* يتيح التمرير الأفقي عند الضرورة */
+    margin-bottom: 25px;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.cultivation-table {
+    width: 100%;
+    border-collapse: collapse;
+    /* border: 1px solid #ddd; */ /* إزالة الحدود الخارجية المكررة */
+}
+
+.cultivation-table th,
+.cultivation-table td {
+    padding: 12px 15px; /* تعديل الحشو */
+    text-align: start; /* محاذاة للبداية (RTL/LTR) */
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap; /* منع التفاف النص مبدئيًا */
+}
+
+.cultivation-table th {
+    background-color: var(--primary-light);
+    font-weight: 700;
+    color: var(--text-color);
+    font-size: 1em; /* تصغير حجم خط العناوين قليلًا */
+}
+
+.cultivation-table tbody tr:nth-child(even) {
+    background-color: #fdfdfd; /* تفتيح لون الخلفية قليلاً */
+}
+
+.cultivation-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.cultivation-table td {
+    font-size: 0.95em;
+    color: var(--text-color);
+}
+
+/* --- استعلامات الوسائط للتجاوب (Media Queries) --- */
+
+/* شاشات متوسطة (مثل الأجهزة اللوحية) */
+@media (max-width: 992px) {
+    .container {
+        max-width: 700px;
+    }
+}
+
+/* شاشات صغيرة (مثل الهواتف) */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    .container {
+        padding-bottom: 70px; /* زيادة الحشو السفلي لاستيعاب الفوتر والزر */
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.6em;
+    }
+
+    .custom-file-upload {
+        min-height: 120px;
+    }
+
+    .result-box h3, .taxonomy-details h3, .taxonomy-details h4 {
+        font-size: 1.15em; /* تصغير العناوين قليلًا */
+    }
+
+    /* جعل خلايا الجدول تسمح بالالتفاف على الشاشات الصغيرة جدًا إذا لزم الأمر */
+    .cultivation-table th,
+    .cultivation-table td {
+       white-space: normal;
+    }
+
+    .lang-switch {
+        padding: 6px 12px;
+        font-size: 0.85em;
+        top: 10px;
+        inset-inline-end: 10px;
+    }
+
+    .page-footer {
+        font-size: 0.85em;
+        padding: 10px 0;
+    }
+}
+
+/* شاشات صغيرة جدًا */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.4em;
+    }
+
+    .submit-button {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+
+    .prediction-header {
+        font-size: 0.9em;
+    }
+
+    .taxonomy-details li {
+        font-size: 0.9em;
+        padding: 6px 0;
+    }
+
+     .taxonomy-details li strong {
+        min-width: 70px;
+    }
+
+    .cultivation-table th,
+    .cultivation-table td {
+        padding: 8px 10px;
+        font-size: 0.9em;
+    }
+}
+
+/* --- أنميشن أساسية (تبقى كما هي) --- */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes slideInUp { from { transform: translateY(25px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* --- نهاية style.css --- */
+/* --- Welcome Splash Screen --- */
+#welcome-splash {
+    position: fixed; /* يغطي الشاشة بالكامل */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-color); /* نفس لون خلفية الصفحة أو لون مميز */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* يجب أن يكون فوق كل شيء */
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.8s ease-out, visibility 0.8s ease-out; /* تأثير الاختفاء */
+    /* يمكن إضافة تأثير دخولي إذا أردت */
+    /* animation: splashFadeIn 0.5s ease-out forwards; */
+}
+
+#welcome-splash.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; /* لمنع التفاعل معه بعد إخفائه */
+}
+
+.welcome-content {
+    text-align: center;
+    color: var(--primary-color); /* لون النص الرئيسي */
+    animation: textPulse 1.5s infinite ease-in-out alternate; /* تأثير نبض للنص */
+}
+
+.welcome-content .icon {
+    font-size: 4em; /* حجم أيقونة الفطر */
+    display: block;
+    margin-bottom: 15px;
+    filter: grayscale(10%) opacity(0.9);
+    transform: rotate(-10deg);
+}
+
+.welcome-content h1 {
+    font-size: 2em; /* حجم الخط للترحيب */
+    color: var(--secondary-color); /* استخدام اللون الثانوي */
+    margin-bottom: 10px;
+}
+
+/* Optional: Keyframes for pulsing text animation */
+@keyframes textPulse {
+    from {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+    to {
+        transform: scale(1.03);
+        opacity: 1;
+    }
+}
+
+/* Optional: Keyframes for splash screen fade-in */
+/* @keyframes splashFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+} */
+
+/* --- نهاية تنسيقات Welcome Splash --- */
+
+/* تأكد من أن بقية تنسيقاتك موجودة */
+/* ... (rest of your CSS code) ... */

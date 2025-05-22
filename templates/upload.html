@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="{{ g.lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ _('تحليل وتصنيف الفطريات') }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+<body style="direction: {{ 'rtl' if g.lang == 'ar' else 'ltr' }};">
+    <div id="welcome-splash">
+        <div class="welcome-content">
+            <span class="icon">🍄</span>
+            <h1>{{ _('أهلاً بك في نظام تحليل الفطريات') }}</h1>
+            </div>
+    </div>
+    <div class="lang-switch">
+        {% if g.lang == 'ar' %}English{% else %}العربية{% endif %}
+    </div>
+
+    <div id="loader-wrapper" class="loader-wrapper" style="display:none;">
+        <div class="loader"></div>
+        <p id="loading-text">{{ _('جاري التحليل...') }}</p>
+    </div>
+
+    <main class="container">
+        <div class="card upload-box">
+            <h1><span class="icon">🍄</span> {{ _('نظام تحليل وتصنيف الفطريات') }}</h1>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <div class="flash-messages">
+                  {% for category, msg in messages %}
+                    <div class="flash {{ category }}">{{ msg }}</div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+
+            <form method="post" enctype="multipart/form-data" id="upload-form">
+                <label for="file-upload" class="custom-file-upload">
+                    <span class="file-upload-icon">☁️</span> <span id="file-upload-text">{{ _('اختر صورة فطر للتحليل أو اسحبها هنا') }}</span>
+                </label>
+                <input id="file-upload" type="file" name="file" accept="image/png, image/jpeg" required>
+                <button type="submit" class="submit-button"><span>🚀</span> {{ _('بدء التحليل') }}</button>
+            </form>
+        </div>
+
+        {% if image_url or predictions %}
+        <div class="card result-box">
+            {% if image_url %}
+                <h3>{{ _('الصورة المرفوعة') }}</h3>
+                <img src="{{ url_for('uploaded_file', filename=image_url) }}" class="preview" alt="{{ _('الصورة المرفوعة لتحليل الفطر') }}">
+            {% endif %}
+
+            {% if predictions %}
+                <h3>{{ _('نتائج التصنيف (الأعلى ثقة)') }}</h3>
+                {% for pred in predictions %}
+                <div class="prediction-item {% if pred.is_top %}top{% endif %}" style="--i: {{ loop.index0 }};">
+                    <div class="prediction-header">
+                        <span>{{ pred['class'] }}</span>
+                        <strong>{{ pred.confidence }}</strong>
+                    </div>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" data-width="{{ pred.confidence.replace('%','') }}"></div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                {% if full_taxonomy %}
+                <div class="taxonomy-details">
+                    <h3>{{ _('التصنيف العلمي التفصيلي') }}</h3>
+                    <ul>
+                        {% for rank, val in full_taxonomy.items() %}
+                            {% if rank not in ['Cultivation_Details','Nutritional_Info'] %}
+                                <li><strong>{{ _(rank) }}:</strong> <span>{{ val }}</span></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+
+                    <h3>{{ _('معلومات إضافية') }}</h3>
+
+                    {# زراعة #}
+                    {% if full_taxonomy['Cultivation'] %}
+                        <h4>{{ _('زراعة') }}</h4>
+                        <p><strong>{{ _('الزراعة:') }}</strong> {{ full_taxonomy['Cultivation'] }}</p>
+                    {% endif %}
+
+                    {# جدول معلومات الزراعة #}
+                    {% if full_taxonomy.Cultivation_Details %}
+                        <h4>{{ _('تفاصيل الزراعة') }}</h4>
+                        <div class="table-container">
+                            <table class="cultivation-table">
+                                <thead>
+                                    <tr>
+                                        <th>{{ _('الركيزة') }}</th>
+                                        <th>{{ _('الظروف') }}</th>
+                                        <th>{{ _('الجدول الزمني') }}</th>
+                                        <th>{{ _('الإنتاج') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ full_taxonomy.Cultivation_Details.Substrate or _('غير متوفر') }}</td>
+                                        <td>{{ full_taxonomy.Cultivation_Details.Conditions or _('غير متوفر') }}</td>
+                                        <td>{{ full_taxonomy.Cultivation_Details.Timeline or _('غير متوفر') }}</td>
+                                        <td>{{ full_taxonomy.Cultivation_Details.Yield or _('غير متوفر') }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+
+                    {# استخدامات #}
+                    {% if full_taxonomy['Uses'] %}
+                        <h4>{{ _('الاستخدامات') }}</h4>
+                        <p><strong>{{ _('الاستخدامات:') }}</strong> {{ full_taxonomy['Uses'] }}</p>
+                    {% endif %}
+
+                    {# معلومات غذائية #}
+                    {% set ni = full_taxonomy.get('Nutritional_Info') %}
+                    {% if ni %}
+                        <h4>{{ _('معلومات غذائية') }}</h4>
+                        <p><strong>{{ _('الفوائد:') }}</strong> {{ ni['Benefits'] or _('غير متوفر') }}</p>
+                        <p><strong>{{ _('المخاطر:') }}</strong> {{ ni['Risks'] or _('غير متوفر') }}</p>
+                    {% endif %}
+
+                    {# معلومات إضافية عامة #}
+                    {% if full_taxonomy['Additional_Info'] %}
+                        <p><strong>{{ _('معلومات إضافية:') }}</strong> {{ full_taxonomy['Additional_Info'] }}</p>
+                    {% endif %}
+                </div>
+                {% elif taxonomy_message %}
+                    <p class="taxonomy-message">{{ taxonomy_message }}</p>
+                {% endif %}
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <footer class="page-footer">{{ _('نظام تجريبي لتصنيف الفطريات - إصدار 1.1') }}</footer> </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
