@@ -1,11 +1,11 @@
 Flask==3.1.0
 Flask-Babel==4.0.0
-gunicorn==23.0.0 # إذا كنت لا تزال تستخدم Render، أبقه. إذا كنت تستهدف PythonAnywhere فقط، يمكن إزالته. دعنا نبقه الآن للاستمرار مع Render.
+gunicorn==23.0.0 
 tensorflow-cpu==2.16.1
 keras==3.9.2
 Pillow==11.1.0
 h5py==3.13.0
 numpy==1.26.4
-protobuf==3.20.3
-grpcio==1.51.3 # التغيير هنا
-grpcio-status==1.51.3 # التغيير هنا
+protobuf==4.21.6  # التغيير هنا
+grpcio==1.51.3
+grpcio-status==1.51.3
