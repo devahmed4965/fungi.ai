@@ -1,6 +1,5 @@
 ﻿from flask import Flask, request, render_template, flash, send_from_directory, redirect, url_for, make_response, g, session
 import os
-os.environ["TF_USE_DIRECTML"] = "0"
 
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
